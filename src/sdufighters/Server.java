@@ -1,17 +1,11 @@
-package sdufighters;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.*;
+import java.net.*;
 
 public class Server {
-    
-    public static int co = 0;
-    public static ClientThread[] clientsConnected = new ClientThread[2];
-    public static DataOutputStream oos;
-    public static DataOutputStream cos;
-    
+
+    private static int co = 0;
+    private static ClientThread[] clientsConnected = new ClientThread[2];
+
     public static void main(String[] args) throws IOException {
         int port = 4444;
         ServerSocket server = null;
@@ -27,8 +21,8 @@ public class Server {
         while (true) {
             try {
                 clientSocket = server.accept();
-                oos = new DataOutputStream(clientSocket.getOutputStream());
-                oos.writeUTF(co+"");
+                DataOutputStream oos = new DataOutputStream(clientSocket.getOutputStream());
+                oos.writeUTF(co + "");
             } catch (IOException e) {
                 e.printStackTrace();
                 if (!server.isClosed()) {
@@ -41,16 +35,16 @@ public class Server {
 
             System.out.println("Client connected!");
 
-            for (int c = 0; c < clientsConnected.length; c++){
-                if (clientsConnected[c] == null){
+            for (int c = 0; c < clientsConnected.length; c++) {
+                if (clientsConnected[c] == null) {
                     // if it is empty ( null) then start a new Thread, and pass the socket and the object of itself as parameter
                     (clientsConnected[c] = new ClientThread(clientSocket, clientsConnected)).start();
                     ++co;
-                    System.out.println("num of players "+co);
+                    System.out.println("num of players " + co);
                     break; // have to break, else it will start 20 threads when the first client connects :P
                 }
             }
-            if(co==2) {
+            if (co == 2) {
                 System.out.println("start");
             }
         }

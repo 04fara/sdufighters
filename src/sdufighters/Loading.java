@@ -1,19 +1,15 @@
-package sdufighters;
-
 import javafx.scene.control.ProgressBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.*;
+import javafx.scene.layout.*;
 
-public class Loading extends Pane {
-    
-    Image logopic = new Image(MortalKombat.class.getResource("res\ui\loadinglogo.png").toString());
+class Loading extends Pane {
+
+    private Image logopic = new Image(MortalKombat.class.getResource("res/ui/loadinglogo.png").toString());
     ImageView logo = new ImageView(logopic);
     ProgressBar progress = new ProgressBar();
-    HBox hb = new HBox();
-        
-    public Loading() {
+
+    Loading() {
+        HBox hb = new HBox();
         logo.setFitHeight(300);
         logo.setFitWidth(300);
         progress.setPrefSize(800, 10);
@@ -24,6 +20,6 @@ public class Loading extends Pane {
         progress.setTranslateY(600);
         progress.setTranslateX(100);
         hb.getChildren().add(logo);
-        getChildren().addAll(hb,progress);
+        getChildren().addAll(hb, progress);
     }
 }

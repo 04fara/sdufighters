@@ -1,21 +1,15 @@
-package sdufighters;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Client {
-    
+
     public static void main(String[] args) throws IOException {
         Client m = new Client();
         m.connect();
     }
 
-    public void connect() throws IOException{
+    private void connect() throws IOException {
         //declare a scanner so we can write a message
-        Scanner keyboard = new Scanner(System.in);
         // localhost ip
         String ip = "0.0.0.0";
         int port = 4444;
@@ -27,41 +21,38 @@ public class Client {
             //initialize streams
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            if(in.readUTF().equals("0")) {
-                name="player1";
-            }
-            else {
-                name="player2";
+            if (in.readUTF().equals("0")) {
+                name = "player1";
+            } else {
+                name = "player2";
             }
             System.out.println(name);
             //start a thread which will start listening for messages
             new ReceiveMessage(in).start();
             // send the name to the server!
             out.writeUTF(name);
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            if(!socket.isClosed()) socket.close();
+            if (!socket.isClosed()) socket.close();
         }
     }
 
     class ReceiveMessage extends Thread {
         DataInputStream in;
-        ReceiveMessage(DataInputStream in){
+
+        ReceiveMessage(DataInputStream in) {
             this.in = in;
         }
-        
+
         public void run() {
             String message;
-            while (true){
+            while (true)
                 try {
                     message = in.readUTF();
                     System.out.println(message);
-                }
-                catch(IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
         }
     }
 }
