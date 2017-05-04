@@ -1,4 +1,4 @@
-# SDU Fighters (2nd, improved, version is coming in Dec-Jan with thoroughly rewritten code)
+# SDU Fighters (2nd, improved, version is coming in Summer 2017 with thoroughly rewritten code)
 
 SDU (Suleyman Demirel University) Fighters is an analog to the well-known Mortal Kombat, and made as a course work, written in Java.
 
